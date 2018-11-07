@@ -50,16 +50,53 @@ assert Phi.shape == (N, m + 1), "The shape of Phi is incorrect"
 
 print("test")
 
+
 # 1.3 YOUR CODE HERE
+
+def predict(w, phi):
+    return np.matmul(w, phi.transpose())
+
+
 # Generate sample data
 x, t = gen_sine(n=10)
 # Compute polynomials
-p0 = fit_polynomial(x, t, M=0)
-p2 = fit_polynomial(x, t, M=2)
-p4 = fit_polynomial(x, t, M=4)
-p8 = fit_polynomial(x, t, M=8)
+w0, phi0 = fit_polynomial(x, t, M=0)
+w2, phi2 = fit_polynomial(x, t, M=2)
+w4, phi4 = fit_polynomial(x, t, M=4)
+w8, phi8 = fit_polynomial(x, t, M=8)
 
-ax1 = plt.subplot(2, 2, 1)
-ax1.plot(x,t)
-ax1.plot(x,p0)
+x_pretty = np.linspace(0, 2 * np.pi, num=100, endpoint=True)
+
+ax1 = plt.subplot(221)
+ax1.plot(x_pretty, np.sin(x_pretty), color="green")
+ax1.plot(x, t, "ro", color="blue")
+ax1.plot(x, predict(w0, phi0), color="red")
+ax1.text(5, 0.5, "M=0")
+plt.ylabel("t")
+plt.xlabel("x")
+
+ax1 = plt.subplot(222)
+ax1.plot(x_pretty, np.sin(x_pretty), color="green")
+ax1.plot(x, t, "ro", color="blue")
+ax1.plot(x, predict(w2, phi2), color="red")
+ax1.text(5, 0.5, "M=2")
+plt.ylabel("t")
+plt.xlabel("x")
+
+ax1 = plt.subplot(223)
+ax1.plot(x_pretty, np.sin(x_pretty), color="green")
+ax1.plot(x, t, "ro", color="blue")
+ax1.plot(x, predict(w4, phi4), color="red")
+ax1.text(5, 0.5, "M=4")
+plt.ylabel("t")
+plt.xlabel("x")
+
+ax1 = plt.subplot(224)
+ax1.plot(x_pretty, np.sin(x_pretty), color="green")
+ax1.plot(x, t, "ro", color="blue")
+ax1.plot(x, predict(w8, phi8), color="red")
+ax1.text(5, 0.5, "M=8")
+plt.ylabel("t")
+plt.xlabel("x")
+
 plt.show()
